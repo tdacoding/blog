@@ -1,6 +1,7 @@
 import { server } from './bff';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { Header, Footer } from './components';
 import { styled } from 'styled-components';
 
 const Content = styled.div`
@@ -11,17 +12,19 @@ const H2 = styled.h2`
 	text-align: center;
 `;
 
-const Header = () => {
-	return <div>Шапка</div>;
-};
-
-const Footer = () => {
-	return <div>Подвал</div>;
-};
+const AppColumn = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 1000px;
+	min-height: 100%;
+	background-color: #fff;
+	margin: 0 auto;
+`;
 
 function Blog() {
 	return (
-		<>
+		<AppColumn>
 			<Header />
 			<Content>
 				<H2>Контент</H2>
@@ -36,7 +39,7 @@ function Blog() {
 				</Routes>
 			</Content>
 			<Footer />
-		</>
+		</AppColumn>
 	);
 }
 

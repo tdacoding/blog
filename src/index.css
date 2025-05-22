@@ -1,4 +1,15 @@
+*  {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
+  background-color: #405060;
+}
+
+html,
+body,
+#root {
+  height: 100%;
 }
 
