@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { ControlPanel, Logo } from './components';
 
-const Discription = styled.div`
+const Description = styled.div`
 	font-style: italic;
 `;
 
@@ -9,13 +9,13 @@ const HeaderContainer = ({ className }) => {
 	return (
 		<header className={className}>
 			<Logo />
-			<Discription>
+			<Description>
 				Веб-технологии
 				<br />
 				Написание кода
 				<br />
 				Разбор ошибок
-			</Discription>
+			</Description>
 			<ControlPanel />
 		</header>
 	);
