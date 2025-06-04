@@ -1,24 +1,30 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { Icon } from '../../../icon/icon';
+import { Icon, Button } from '../../../../components';
+import { ROLE } from '../../../../constants';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+	selectUserRole,
+	selectUserLogin,
+	selectUserSession,
+} from '../../../../selectors';
+
+import { logout } from '../../../../actions';
 
 const RightAligned = styled.div`
 	display: flex;
 	justify-content: flex-end;
-`;
-
-const StyledLink = styled(Link)`
-	display: flex;
-	justify-content: center;
 	align-items: center;
+`;
+const UserName = styled.div`
 	font-size: 18px;
-	width: 100px;
+	font-weight: bold;
+	margin: 0 10px 0 0;
 	height: 32px;
-	border: 1px solid #000;
-	background-color: #eee;
+	align-content: center;
 `;
 
-const StyledDiv = styled.div`
+const StyledIcon = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
@@ -26,17 +32,40 @@ const StyledDiv = styled.div`
 
 const ControlPanelContainer = ({ className }) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const roleId = useSelector(selectUserRole);
+	const login = useSelector(selectUserLogin);
+	const session = useSelector(selectUserSession);
+
 	return (
 		<div className={className}>
 			<RightAligned>
-				<StyledLink className={className} to="/login">
-					Войти
-				</StyledLink>
+				{roleId === ROLE.GUEST ? (
+					<Button>
+						<Link to="/login">Войти</Link>
+					</Button>
+				) : (
+					<>
+						<UserName>{login}</UserName>
+						<StyledIcon>
+							<Icon
+								id="fa-sign-out"
+								size="24px"
+								margin="0 0 0 0"
+								onClick={() => {
+									dispatch(logout(session));
+									navigate('/login');
+								}}
+							/>
+						</StyledIcon>
+					</>
+				)}
 			</RightAligned>
+
 			<RightAligned>
-				<StyledDiv onClick={() => navigate(-1)}>
+				<StyledIcon onClick={() => navigate(-1)}>
 					<Icon id="fa-backward" size="24px" margin="10px 0 0 0" />
-				</StyledDiv>
+				</StyledIcon>
 
 				<Link to="/post">
 					<Icon id="fa-file-text-o" size="24px" margin="10px 0 0 16px" />

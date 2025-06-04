@@ -1,1 +1,1 @@
-export * from './bff.jsx';
+export * from './server.jsx';
