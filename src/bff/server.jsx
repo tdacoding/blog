@@ -29,12 +29,12 @@ export const server = {
 	},
 	register: async (regLogin, regPassword) => {
 		try {
-			const user = await getUser(regLogin);
-			if (user) {
+			const existedUser = await getUser(regLogin);
+			if (existedUser) {
 				return { error: 'Данное Имя пользователя уже используется', res: null };
 			}
 
-			await createUser(regLogin, regPassword);
+			const user = await createUser(regLogin, regPassword);
 
 			return {
 				error: null,
