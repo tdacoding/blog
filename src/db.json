@@ -20,26 +20,12 @@
       "registered_at": "2043-12-05 18:51",
       "role_id": 2,
       "id": "Vm33Tdm"
-    },
-    {
-      "login": "asdf",
-      "password": "123",
-      "registered_at": "2038-04-05 07:46",
-      "role_id": 2,
-      "id": "5ioPIlH"
-    },
-    {
-      "login": "qwrqwrq",
-      "password": "123",
-      "registered_at": "2041-06-24 18:00",
-      "role_id": 2,
-      "id": "KASZwJd"
     }
   ],
   "roles": [
     {
       "id": 0,
-      "name": "Админ"
+      "name": "Администратор"
     },
     {
       "id": 1,

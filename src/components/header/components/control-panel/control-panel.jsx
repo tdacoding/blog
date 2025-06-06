@@ -24,12 +24,6 @@ const UserName = styled.div`
 	align-content: center;
 `;
 
-const StyledIcon = styled.div`
-	&:hover {
-		cursor: pointer;
-	}
-`;
-
 const ControlPanelContainer = ({ className }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -47,25 +41,27 @@ const ControlPanelContainer = ({ className }) => {
 				) : (
 					<>
 						<UserName>{login}</UserName>
-						<StyledIcon>
-							<Icon
-								id="fa-sign-out"
-								size="24px"
-								margin="0 0 0 0"
-								onClick={() => {
-									dispatch(logout(session));
-									navigate('/login');
-								}}
-							/>
-						</StyledIcon>
+
+						<Icon
+							id="fa-sign-out"
+							size="24px"
+							margin="0 0 0 0"
+							onClick={() => {
+								dispatch(logout(session));
+								navigate('/login');
+							}}
+						/>
 					</>
 				)}
 			</RightAligned>
 
 			<RightAligned>
-				<StyledIcon onClick={() => navigate(-1)}>
-					<Icon id="fa-backward" size="24px" margin="10px 0 0 0" />
-				</StyledIcon>
+				<Icon
+					id="fa-backward"
+					size="24px"
+					margin="10px 0 0 0"
+					onClick={() => navigate(-1)}
+				/>
 
 				<Link to="/post">
 					<Icon id="fa-file-text-o" size="24px" margin="10px 0 0 16px" />

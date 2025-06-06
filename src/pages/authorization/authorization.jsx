@@ -63,6 +63,7 @@ const AuthorizationContainer = ({ className }) => {
 				setServerError(`Ошибка запроса: ${error}`);
 				return;
 			}
+
 			dispatch(setUser(res));
 		});
 	};
