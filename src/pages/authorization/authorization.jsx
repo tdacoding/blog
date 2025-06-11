@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { server } from '../../bff';
 import { useState } from 'react';
-import { Input, Button, H2, AuthFormError } from '../../components/';
 import styled from 'styled-components';
 import { Link, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { server } from '../../bff';
+import { Input, Button, H2, AuthFormError } from '../../components/';
 import { setUser } from '../../actions';
-import { useDispatch, useStore, useSelector } from 'react-redux';
 import { selectUserRole } from '../../selectors';
 import { ROLE } from '../../constants';
 import { useResetForm } from '../../hooks';
@@ -52,7 +52,6 @@ const AuthorizationContainer = ({ className }) => {
 	const [serverError, setServerError] = useState(null);
 
 	const dispatch = useDispatch();
-	const store = useStore();
 	const roleId = useSelector(selectUserRole);
 
 	useResetForm(reset);
@@ -65,6 +64,7 @@ const AuthorizationContainer = ({ className }) => {
 			}
 
 			dispatch(setUser(res));
+			sessionStorage.setItem('userData', JSON.stringify(res));
 		});
 	};
 	const formError = errors.login?.message || errors.password?.message;

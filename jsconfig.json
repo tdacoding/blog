@@ -1,0 +1,4 @@
+{
+	"compilerOptions": {"jsx": "react-jsx","module": "ESNext","target": "ES6","moduleResolution": "node","allowSyntheticDefaultImports": true,"strict": false},
+	"exclude": ["node_modules"]
+  }
