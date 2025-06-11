@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import { H2, Content } from '../../components/';
-import { UserRow, TableRow } from './components';
-import { useServerRequest } from '../../hooks';
 import { useEffect, useState } from 'react';
+import { H2, Content } from '../../components/';
 import { ROLE } from '../../constants';
+import { useServerRequest } from '../../hooks';
+import { UserRow, TableRow } from './components';
 
 const UsersContainer = ({ className }) => {
 	const [users, setUsers] = useState([]);
