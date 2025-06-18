@@ -2,14 +2,25 @@ import styled from 'styled-components';
 
 import { useDispatch } from 'react-redux';
 import { Icon } from '../../../../../../components';
-import { removeCommentAsync } from '../../../../../../actions';
+import { removeCommentAsync, openModal, CLOSE_MODAL } from '../../../../../../actions';
 import { useServerRequest } from '../../../../../../hooks';
 
 const CommentContainer = ({ className, id, author, content, publishedAt, postId }) => {
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
 	const onCommentRemove = (commentId) => {
-		dispatch(removeCommentAsync(requestServer, commentId, postId));
+		dispatch(
+			openModal({
+				text: 'Удалить комментарий?',
+				onConfirm: () => {
+					dispatch(removeCommentAsync(requestServer, commentId, postId));
+					dispatch(CLOSE_MODAL);
+				},
+				onCancel: () => {
+					dispatch(CLOSE_MODAL);
+				},
+			}),
+		);
 	};
 	return (
 		<div className={className}>
