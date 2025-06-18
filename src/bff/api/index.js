@@ -11,3 +11,4 @@ export * from './add-session';
 export * from './delete-session';
 export * from './get-sesion';
 export * from './delete-comment';
+export * from './save-post';
