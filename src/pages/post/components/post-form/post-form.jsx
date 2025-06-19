@@ -8,7 +8,7 @@ import { useServerRequest } from '../../../../hooks';
 import { editPostAsync } from '../../../../actions';
 
 const PostFormContainer = ({ className, post }) => {
-	const { id, title, imageURL, content, publishedAt } = post;
+	const { id, title, imageUrl, content, publishedAt } = post;
 	const imageRef = useRef(null);
 	const titleRef = useRef(null);
 	const contentRef = useRef(null);
@@ -24,23 +24,28 @@ const PostFormContainer = ({ className, post }) => {
 				.replaceAll('<div><br></div>', '\n')
 				.replaceAll('<div>', '\n')
 				.replaceAll('</div>', '');
-		const newImageURL = imageRef.current.value;
+		const newImageUrl = imageRef.current.value;
 		const newTitle = titleRef.current.value;
 		const newContent = sanitizeContent(contentRef.current.innerHTML);
 		dispatch(
 			editPostAsync(requestServer, {
-				imageURL: newImageURL,
+				imageUrl: newImageUrl,
 				title: newTitle,
 				content: newContent,
 				postId: id,
 			}),
-		);
-		navigate(`/post/:${id}`);
+		).then(({ id }) => {
+			navigate(`/post/:${id}`);
+		});
 	};
 	return (
 		<div className={className}>
-			<Input ref={imageRef} defaultValue={imageURL} />
-			<Input ref={titleRef} defaultValue={title} />
+			<Input
+				ref={imageRef}
+				defaultValue={imageUrl}
+				placeholder="Ссылка на изображение"
+			/>
+			<Input ref={titleRef} defaultValue={title} placeholder="Название статьи" />
 			<SpecialPanel
 				publishedAt={publishedAt}
 				postId={id}
@@ -68,5 +73,7 @@ export const PostForm = styled(PostFormContainer)`
 	& .post-text {
 		font-size: 18px;
 		white-space: pre-line;
+		min-height: 80px;
+		border: 1px solid #000;
 	}
 `;

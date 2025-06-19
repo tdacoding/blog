@@ -1,8 +1,8 @@
 import { sessions } from '../sessions';
 import { ROLE } from '../constants';
-import { getPost, getComments, savePost } from '../api';
+import { getPost, getComments, savePost, createPost } from '../api';
 
-export const editPost = async (hash, { imageURL, title, content, postId }) => {
+export const editPost = async (hash, { imageUrl, title, content, postId }) => {
 	const accessRoles = [ROLE.ADMIN];
 
 	try {
@@ -10,12 +10,17 @@ export const editPost = async (hash, { imageURL, title, content, postId }) => {
 		if (!access) {
 			return { error: 'Вы не авторизованы!', res: null };
 		}
-		await savePost({ imageURL, title, content, postId });
-		const post = await getPost(postId);
-		const comments = await getComments(postId);
+
+		const editedPost =
+			postId === null
+				? await createPost({ imageUrl, title, content })
+				: await savePost({ imageUrl, title, content, postId });
+		// const post = await getPost(editedPost.id);
+
+		const comments = await getComments(editedPost.id);
 		return {
 			error: null,
-			res: { ...post, comments },
+			res: { ...editedPost, comments },
 		};
 	} catch (error) {
 		return error;

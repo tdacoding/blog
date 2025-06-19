@@ -4,11 +4,11 @@ import { H2 } from '../../../../components';
 import { SpecialPanel } from '../special-panel/special-panel';
 
 const PostContentContainer = ({ className, post }) => {
-	const { id, title, imageURL, content, publishedAt } = post;
+	const { id, title, imageUrl, content, publishedAt } = post;
 	const navigate = useNavigate();
 	return (
 		<div className={className}>
-			<img src={imageURL} alt="Название статьи" />
+			<img src={imageUrl} alt="Название статьи" />
 			<H2>{title}</H2>
 			<SpecialPanel
 				publishedAt={publishedAt}

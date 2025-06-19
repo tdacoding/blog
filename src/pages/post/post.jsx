@@ -12,21 +12,33 @@ const PostContainer = ({ className }) => {
 	const dispatch = useDispatch();
 	const params = useParams();
 	const isEditing = useMatch('/post/:id/edit');
+	const isCreating = useMatch('/post');
 
 	const requestServer = useServerRequest();
-	const id = params.id[0] === ':' ? params.id.slice(1) : params.id;
+	const id = !isCreating && params.id[0] === ':' ? params.id.slice(1) : params.id;
 
 	useLayoutEffect(() => {
 		dispatch(RESET_POST_DATA);
 	}, [dispatch]);
 
 	useEffect(() => {
+		if (isCreating) {
+			return;
+		}
 		dispatch(loadPostAsync(requestServer, id));
-	}, [requestServer, dispatch, id]);
+	}, [requestServer, dispatch, id, isCreating]);
 	return (
 		<div className={className}>
-			{!isEditing ? <PostContent post={post} /> : <PostForm post={post} />}
-			{!isEditing ? <Comments comments={post.comments} postId={post.id} /> : ''}
+			{!(isEditing || isCreating) ? (
+				<PostContent post={post} />
+			) : (
+				<PostForm post={post} />
+			)}
+			{!(isEditing || isCreating) ? (
+				<Comments comments={post.comments} postId={post.id} />
+			) : (
+				''
+			)}
 		</div>
 	);
 };

@@ -4,7 +4,7 @@ export const postTransformer = (post) => {
 		title: post.title,
 		content: post.content,
 		publishedAt: post.published_at,
-		imageURL: post.image_url,
+		imageUrl: post.image_url,
 		comments: post.comments,
 	};
 };
