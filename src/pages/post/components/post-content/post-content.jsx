@@ -13,6 +13,7 @@ const PostContentContainer = ({ className, post }) => {
 			<SpecialPanel
 				publishedAt={publishedAt}
 				iconName="fa-pencil-square-o"
+				postId={id}
 				onClick={() => {
 					navigate(`/post/:${id}/edit`);
 				}}

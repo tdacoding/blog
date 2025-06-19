@@ -43,6 +43,7 @@ const PostFormContainer = ({ className, post }) => {
 			<Input ref={titleRef} defaultValue={title} />
 			<SpecialPanel
 				publishedAt={publishedAt}
+				postId={id}
 				iconName="fa-floppy-o"
 				onClick={onSave}
 			/>

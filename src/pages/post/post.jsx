@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useMatch } from 'react-router-dom';
 import { useServerRequest } from '../../hooks';
-import { loadPostAsync } from '../../actions';
+import { loadPostAsync, RESET_POST_DATA } from '../../actions';
 import { selectPost } from '../../selectors';
 import { PostContent, Comments, PostForm } from './components';
 
@@ -15,6 +15,11 @@ const PostContainer = ({ className }) => {
 
 	const requestServer = useServerRequest();
 	const id = params.id[0] === ':' ? params.id.slice(1) : params.id;
+
+	useLayoutEffect(() => {
+		dispatch(RESET_POST_DATA);
+	}, [dispatch]);
+
 	useEffect(() => {
 		dispatch(loadPostAsync(requestServer, id));
 	}, [requestServer, dispatch, id]);
