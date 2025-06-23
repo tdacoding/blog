@@ -8,7 +8,7 @@ const PostContentContainer = ({ className, post }) => {
 	const navigate = useNavigate();
 	return (
 		<div className={className}>
-			<img src={imageUrl} alt="Название статьи" />
+			<img src={imageUrl} alt={title} />
 			<H2>{title}</H2>
 			<SpecialPanel
 				publishedAt={publishedAt}
