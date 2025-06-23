@@ -11,6 +11,7 @@ const Page = styled.div`
 `;
 
 const AppColumn = styled.div`
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
