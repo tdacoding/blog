@@ -1,8 +1,8 @@
 import { getComments, getPosts } from '../api';
 
-export const fetchPosts = async () => {
+export const fetchPosts = async (page, limit) => {
 	try {
-		const posts = await getPosts();
+		const { posts, links } = await getPosts(page, limit);
 		const newPosts = await Promise.all(
 			posts.map(async (post) => {
 				const comments = await getComments(post.id);
@@ -13,7 +13,7 @@ export const fetchPosts = async () => {
 
 		return {
 			error: null,
-			res: newPosts,
+			res: { posts: newPosts, links },
 		};
 	} catch (error) {
 		return error;
