@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import { useServerRequest } from '../../../../hooks';
-import { selectUserId } from '../../../../selectors';
+import { selectUserId, selectUserRole } from '../../../../selectors';
 import { Icon } from '../../../../components';
 import { addCommentAsync } from '../../../../actions';
+import { ROLE } from '../../../../constants';
 import { Comment } from './components';
 
 const CommentsContainer = ({ className, comments, postId }) => {
@@ -12,6 +13,8 @@ const CommentsContainer = ({ className, comments, postId }) => {
 	const dispatch = useDispatch();
 	const userId = useSelector(selectUserId);
 	const requestServer = useServerRequest();
+	const userRole = useSelector(selectUserRole);
+	const isGuest = userRole === ROLE.GUEST;
 	const onNewCommentAdd = (postId, userId, newComment) => {
 		setNewComment('');
 		dispatch(addCommentAsync(requestServer, postId, userId, newComment));
@@ -19,20 +22,22 @@ const CommentsContainer = ({ className, comments, postId }) => {
 
 	return (
 		<div className={className}>
-			<div className="new-comment">
-				<textarea
-					name="comment"
-					value={newComment}
-					placeholder="Комментарий..."
-					onChange={({ target }) => setNewComment(target.value)}
-				></textarea>
-				<Icon
-					id="fa-paper-plane-o"
-					size="16px"
-					margin="0 0 0 10px"
-					onClick={() => onNewCommentAdd(postId, userId, newComment)}
-				/>
-			</div>
+			{!isGuest && (
+				<div className="new-comment">
+					<textarea
+						name="comment"
+						value={newComment}
+						placeholder="Комментарий..."
+						onChange={({ target }) => setNewComment(target.value)}
+					></textarea>
+					<Icon
+						id="fa-paper-plane-o"
+						size="16px"
+						margin="0 0 0 10px"
+						onClick={() => onNewCommentAdd(postId, userId, newComment)}
+					/>
+				</div>
+			)}
 			<div className="comments">
 				{comments.map(({ id, author, content, publishedAt, postId }) => (
 					<Comment

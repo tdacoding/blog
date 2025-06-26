@@ -10,6 +10,7 @@ import {
 } from '../../../../selectors';
 
 import { logout, RESET_POST_DATA } from '../../../../actions';
+import { checkAccess } from '../../../../utils';
 
 const RightAligned = styled.div`
 	display: flex;
@@ -30,6 +31,7 @@ const ControlPanelContainer = ({ className }) => {
 	const roleId = useSelector(selectUserRole);
 	const login = useSelector(selectUserLogin);
 	const session = useSelector(selectUserSession);
+	const isAdmin = checkAccess([ROLE.ADMIN], roleId);
 
 	const onLogout = () => {
 		dispatch(logout(session));
@@ -66,22 +68,28 @@ const ControlPanelContainer = ({ className }) => {
 					onClick={() => navigate(-1)}
 				/>
 
-				<Icon
-					id="fa-file-text-o"
-					size="24px"
-					margin="10px 0 0 16px"
-					onClick={() => {
-						dispatch(RESET_POST_DATA);
-						navigate('/post');
-					}}
-				/>
+				{isAdmin ? (
+					<>
+						<Icon
+							id="fa-file-text-o"
+							size="24px"
+							margin="10px 0 0 16px"
+							onClick={() => {
+								dispatch(RESET_POST_DATA);
+								navigate('/post');
+							}}
+						/>
 
-				<Icon
-					id="fa-users"
-					size="24px"
-					margin="10px 0 0 16px"
-					onClick={() => navigate('/users')}
-				/>
+						<Icon
+							id="fa-users"
+							size="24px"
+							margin="10px 0 0 16px"
+							onClick={() => navigate('/users')}
+						/>
+					</>
+				) : (
+					''
+				)}
 			</RightAligned>
 		</div>
 	);

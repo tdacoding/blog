@@ -1,14 +1,19 @@
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '../../../../components';
 import { useServerRequest } from '../../../../hooks';
 import { openModal, CLOSE_MODAL, removePostAsync } from '../../../../actions';
+import { checkAccess } from '../../../../utils';
+import { ROLE } from '../../../../constants';
+import { selectUserRole } from '../../../../selectors';
 
 const SpecialPanelContainer = ({ className, publishedAt, iconName, onClick, postId }) => {
 	const requestServer = useServerRequest();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const roleId = useSelector(selectUserRole);
+	const isAdmin = checkAccess([ROLE.ADMIN], roleId);
 	const onPostRemove = (postId) => {
 		dispatch(
 			openModal({
@@ -33,17 +38,24 @@ const SpecialPanelContainer = ({ className, publishedAt, iconName, onClick, post
 				)}
 				{publishedAt}
 			</div>
-			<div className="buttons">
-				<Icon id={iconName} size="21px" margin="1px 10px 0 0" onClick={onClick} />
-				{publishedAt && (
+			{isAdmin && (
+				<div className="buttons">
 					<Icon
-						id="fa-trash-o"
+						id={iconName}
 						size="21px"
-						margin="0 0 0 0"
-						onClick={() => onPostRemove(postId)}
+						margin="1px 10px 0 0"
+						onClick={onClick}
 					/>
-				)}
-			</div>
+					{publishedAt && (
+						<Icon
+							id="fa-trash-o"
+							size="21px"
+							margin="0 0 0 0"
+							onClick={() => onPostRemove(postId)}
+						/>
+					)}
+				</div>
+			)}
 		</div>
 	);
 };

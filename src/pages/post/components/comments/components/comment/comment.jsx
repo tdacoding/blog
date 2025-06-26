@@ -1,14 +1,22 @@
 import styled from 'styled-components';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '../../../../../../components';
 import { removeCommentAsync, openModal, CLOSE_MODAL } from '../../../../../../actions';
 import { useServerRequest } from '../../../../../../hooks';
+import { selectUserRole } from '../../../../../../selectors';
+import { ROLE } from '../../../../../../constants';
 
 const CommentContainer = ({ className, id, author, content, publishedAt, postId }) => {
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
+	const userRole = useSelector(selectUserRole);
+	const mayRemoveComment = [ROLE.ADMIN, ROLE.MODERATOR].includes(userRole);
+
 	const onCommentRemove = (commentId) => {
+		if (!mayRemoveComment) {
+			return;
+		}
 		dispatch(
 			openModal({
 				text: 'Удалить комментарий?',
@@ -37,12 +45,14 @@ const CommentContainer = ({ className, id, author, content, publishedAt, postId 
 				</div>
 				<div className="comment-text">{content}</div>
 			</div>
-			<Icon
-				id="fa-trash-o"
-				size="22px"
-				margin="0 0 0 10px"
-				onClick={() => onCommentRemove(id)}
-			/>
+			{mayRemoveComment && (
+				<Icon
+					id="fa-trash-o"
+					size="22px"
+					margin="0 0 0 10px"
+					onClick={() => onCommentRemove(id)}
+				/>
+			)}
 		</div>
 	);
 };
