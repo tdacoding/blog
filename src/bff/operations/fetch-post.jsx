@@ -10,6 +10,9 @@ export const fetchPost = async (postId) => {
 			res: { ...post, comments },
 		};
 	} catch (error) {
-		return error;
+		return {
+			error,
+			res: {},
+		};
 	}
 };

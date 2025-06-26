@@ -6,13 +6,13 @@ const Div = styled.div`
 	flex-direction: column;
 	align-items: center;
 `;
-export const Content = ({ children, error }) => {
-	return error ? (
-		<Div>
-			<H2>Ошибка</H2>
-			<div>{error}</div>
-		</Div>
-	) : (
-		children
+export const Error = ({ error }) => {
+	return (
+		error && (
+			<Div>
+				<H2>Ошибка</H2>
+				<div>{error}</div>
+			</Div>
+		)
 	);
 };
